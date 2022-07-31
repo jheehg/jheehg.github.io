@@ -1,7 +1,7 @@
-site: Sidey
+site: jheehg blog
 url: #yoururl
-title: Sidey
-description: Simple and minimalistic jekyll blogging theme.
+title: jheehg blog
+description: jheehg blog
 twitter:
   username: #yourusername
   card: summary
@@ -14,25 +14,25 @@ author:
   url: #yoururl
 permalink: pretty
 
-baseurl: ""
+baseurl: ''
 
 highlighter: none
 
 exclude:
   - .jekyll-cache
-  
+
 compress_html:
   clippings: all
-  comments: ["<!-- ", " -->"]
+  comments: ['<!-- ', ' -->']
 
 sass:
-  sass_dir:          _sass
-  style:            :compressed
+  sass_dir: _sass
+  style: :compressed
 
 plugins:
   - jekyll-paginate
   - jekyll-seo-tag
-  - jekyll-sitemap  
+  - jekyll-sitemap
 
 collections:
   pages:
@@ -41,22 +41,19 @@ collections:
   posts:
     output: true
     permalink: /:year/:month/:day/:slug
-  
+
 defaults:
-  -
-    scope:
-      path: ""
+  - scope:
+      path: ''
     values:
-      layout: "default"
-  -
-    scope:
-      path: ""
-      type: "pages"
+      layout: 'default'
+  - scope:
+      path: ''
+      type: 'pages'
     values:
-      layout: "page"
-  -
-    scope:
-      path: ""
-      type: "posts"
+      layout: 'page'
+  - scope:
+      path: ''
+      type: 'posts'
     values:
-      layout: "post"
+      layout: 'post'
