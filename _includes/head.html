@@ -30,9 +30,30 @@
   <link rel="sitemap" type="application/xml" title="sitemap" href="{{ site.baseurl }}/sitemap.xml" />
   <style>
     {% capture include_to_scssify %}
-      {% include inline.scss %}
+    {% include inline.scss %}
     {% endcapture %}
     {{ include_to_scssify | scssify }}
   </style>
+  <script src="https://kit.fontawesome.com/1a545d07e1.js" crossorigin="anonymous"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const themeType = localStorage.getItem('themeType') || 'light';
+    const themeIconClassList = document.querySelector('#themeIcon').classList;
+
+    if(themeType !== 'dark') {
+      document.documentElement.className = 'light';
+      if(!themeIconClassList.contains('fa-toggle-on')) {
+        document.querySelector('#themeIcon').classList.add('fa-toggle-on');
+      }
+      document.querySelector('#themeIcon').classList.remove('fa-toggle-off');
+    } else {
+      document.documentElement.className = 'dark';
+      if(!themeIconClassList.contains('fa-toggle-off')) {
+      document.querySelector('#themeIcon').classList.add('fa-toggle-off');
+      }
+      document.querySelector('#themeIcon').classList.remove('fa-toggle-on');
+    }
+  });
+  </script>
    
 </head>
