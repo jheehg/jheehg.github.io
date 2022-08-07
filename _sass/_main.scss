@@ -13,15 +13,19 @@
 :root.light {
   --bg-color: #fff;
   --text-color: #123;
-  --pre-color: rgb(236, 237, 238);
   --header-bar-color: #4170d7;
+  --blockquote-bar-color: rgba(137, 122, 93, 0.806);
+  --code-bg-color: #edecec;
+  --code-text-color: rgb(214, 92, 4);
 }
 
 :root.dark {
   --bg-color: #282828;
   --text-color: #e1e1e1;
-  --pre-color: #161616;
   --header-bar-color: #72b0c6;
+  --blockquote-bar-color: rgba(233, 229, 189, 0.506);
+  --code-bg-color: #212121;
+  --code-text-color: #2d91c8;
 }
 
 body {
@@ -72,13 +76,12 @@ pre {
   margin: 2rem 0;
 }
 
-code,
-pre {
-  background: var(--pre-color);
-}
-
 code {
-  padding: 0.1rem;
+  padding: 0.2rem 0.3rem;
+  background-color: var(--code-bg-color);
+  border-radius: 6px;
+  color: var(--code-text-color);
+  font-weight: 500;
 }
 
 pre code {
@@ -130,8 +133,13 @@ section {
 
 blockquote {
   font-style: italic;
-  border-left: 5px solid #ececec;
   padding-left: 1rem;
+  border-left: 6px solid var(--blockquote-bar-color);
+  border-right: 1px solid var(--blockquote-bar-color);
+  border-top: 1px solid var(--blockquote-bar-color);
+  border-bottom: 1px solid var(--blockquote-bar-color);
+  margin-left: 0px;
+  padding-left: 17px;
 }
 
 h1,
