@@ -18,6 +18,7 @@ title: Search
 		font-family: inherit;
 		font-size: 100%;
 		border: none;
+		color: #123;
 	}
 	#results-container {
 		margin: .5rem 0;
