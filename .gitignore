@@ -1,4 +1,6 @@
-_site
+_site/2022
+_site/assets
+_site/**.*
 Gemfile
 Gemfile.lock
 .jekyll-cache
