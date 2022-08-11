@@ -1,7 +1,6 @@
 _site/2022
 _site/assets
 _site/*.*
-!/_site/.nojekyll
-#Gemfile
-#Gemfile.lock
+Gemfile
+Gemfile.lock
 .jekyll-cache
