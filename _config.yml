@@ -63,3 +63,7 @@ defaults:
       type: 'posts'
     values:
       layout: 'post'
+  - scope:
+      path: "assets/images"
+    values:
+      image: true
