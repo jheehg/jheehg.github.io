@@ -1,15 +1,26 @@
+@import 'variables';
+
+div.highlight {
+  margin-top: 0.3rem;
+  border: 1px solid var(--pre-highlight-color);
+  border-radius: 4px;
+  background-color: var(--pre-bg-color);
+  pre.highlight {
+    background-color: var(--pre-bg-color);
+  }
+}
 .highlight table td { padding: 5px; }
 .highlight table pre { margin: 0; }
 .highlight code {
   background-color: transparent;
   border: none;
   border-radius: 0px;
-  color: #f8f8f2;
+  color: var(--text-color);
   font-weight: initial;
 }
 
 .highlight, .highlight .w {
-  color: #f8f8f2;
+  color: var(--text-color);
   background-color: #2b2c27;
 }
 .highlight .err {
@@ -17,7 +28,7 @@
   background-color: #f92672;
 }
 .highlight .c, .highlight .ch, .highlight .cd, .highlight .cm, .highlight .cpf, .highlight .c1, .highlight .cs {
-  color: #75715e;
+  color: var(--pre-highlight-color);
 }
 .highlight .cp {
   color: #f4bf75;
@@ -26,10 +37,10 @@
   color: #f4bf75;
 }
 .highlight .o, .highlight .ow {
-  color: #f8f8f2;
+  color: var(--text-color);
 }
 .highlight .p, .highlight .pi {
-  color: #f8f8f2;
+  color: var(--text-color);
 }
 .highlight .gi {
   color: #a6e22e;
@@ -45,23 +56,20 @@
 .highlight .k, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kv {
   color: #ae81ff;
 }
-.highlight .kc {
-  color: #fd971f;
-}
-.highlight .kt {
-  color: #fd971f;
+.highlight .kc, .highlight .kt {
+  color: #e57c04;
 }
 .highlight .kd {
-  color: #2ac7d9;
+  color: #27a8c2; // #2ac7d9;
 }
 .highlight .s, .highlight .sb, .highlight .sc, .highlight .dl, .highlight .sd, .highlight .s2, .highlight .sh, .highlight .sx, .highlight .s1 {
-  color: #a6e22e;
+  color: #70a801; // #a6e22e;
 }
 .highlight .sa {
   color: #ae81ff;
 }
 .highlight .sr {
-  color: #a1efe4;
+  color: #81c4bc;
 }
 .highlight .si {
   color: #cc6633;
@@ -79,11 +87,11 @@
   color: #f4bf75;
 }
 .highlight .na {
-  color: #66d9ef;
+  color: #27a8c2; //#66d9ef;
 }
 .highlight .m, .highlight .mb, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mx {
-  color: #a6e22e;
+  color: #70a801; //#a6e22e;
 }
 .highlight .ss {
-  color: #a6e22e;
+  color: #70a801; //#a6e22e;
 }
