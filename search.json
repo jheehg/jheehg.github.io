@@ -1,0 +1,36 @@
+[
+  
+    {
+
+      "title"    : "github actions으로 jekyll 수동 배포",
+      "description" : "github actions으로 jekyll 수동 배포를 위한 글입니다.",
+      "url"      : "/2022/08/15/deploy-with-github-actions",
+      "category" : "gitblog",
+      "tags"     : "jekyll, github actions",
+      "date"     : "2022-08-15 00:00:00 +0000"
+
+    } ,
+  
+    {
+
+      "title"    : "github blog 생성해보기",
+      "description" : "github blog를 생성해보는 과정을 적은 포스트입니다.",
+      "url"      : "/2022/07/31/tutorial-for-gitblog",
+      "category" : "gitblog",
+      "tags"     : "jekyll, gitblog, ruby, bundle",
+      "date"     : "2022-07-31 00:00:00 +0000"
+
+    } ,
+  
+    {
+
+      "title"    : "blog post 테스트 글입니다.",
+      "description" : "blog post 테스트 글입니다.",
+      "url"      : "/2022/07/31/test",
+      "category" : "",
+      "tags"     : "jekyll, coding",
+      "date"     : "2022-07-31 00:00:00 +0000"
+
+    } 
+  
+]
