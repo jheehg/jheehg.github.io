@@ -36,7 +36,7 @@ sass:
   style: :compressed
 
 plugins:
-  - jekyll-paginate
+  - jekyll-paginate-v2
   - jekyll-seo-tag
   - jekyll-sitemap
 
@@ -64,6 +64,15 @@ defaults:
     values:
       layout: 'post'
   - scope:
-      path: "assets/images"
+      path: 'assets/images'
     values:
       image: true
+
+pagination:
+  enabled: true
+  per_page: 10
+  # offset: 2
+  permalink: '/page/:num/'
+  title: ' - page :num of :max'
+  sort_field: 'date'
+  sort_reverse: true
