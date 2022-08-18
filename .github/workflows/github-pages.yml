@@ -31,5 +31,5 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           # GITHUB_TOKEN secret is set up automatically
-          JEKYLL_PAT: ${{ secrets.JEKYLL_PAT }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./_site
