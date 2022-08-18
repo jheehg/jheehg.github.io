@@ -1,0 +1,78 @@
+site: jheehg blog
+url: #yoururl
+title: jheehg blog
+description: jheehg blog
+twitter:
+  username: #yourusername
+  card: summary
+  creator: #yourusername
+author:
+  twitter: #yourusername
+  name: #yourusername
+  avatar:
+  email: #youremail
+  url: #yoururl
+permalink: pretty
+
+baseurl: ''
+
+markdown: kramdown
+highlighter: rouge
+
+kramdown: 
+  input: GFM
+  syntax-highlighter: rouge
+
+
+exclude:
+  - .jekyll-cache
+
+compress_html:
+  clippings: all
+  comments: ['<!-- ', ' -->']
+
+sass:
+  sass_dir: _sass
+  style: :compressed
+
+plugins:
+  - jekyll-paginate-v2
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+collections:
+  pages:
+    output: true
+    permalink: /:name
+  posts:
+    output: true
+    permalink: /:year/:month/:day/:slug
+
+defaults:
+  - scope:
+      path: ''
+    values:
+      layout: 'default'
+  - scope:
+      path: ''
+      type: 'pages'
+    values:
+      layout: 'page'
+  - scope:
+      path: ''
+      type: 'posts'
+    values:
+      layout: 'post'
+  - scope:
+      path: 'assets/images'
+    values:
+      image: true
+
+pagination:
+  enabled: true
+  per_page: 10
+  # offset: 2
+  permalink: '/page/:num/'
+  title: ' - page :num of :max'
+  sort_field: 'date'
+  sort_reverse: true

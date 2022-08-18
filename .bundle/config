@@ -1,0 +1,5 @@
+---
+BUNDLE_PATH: "/home/runner/work/jheehg.github.io/jheehg.github.io/vendor/bundle"
+BUNDLE_DEPLOYMENT: "true"
+BUNDLE_JOBS: "4"
+BUNDLE_RETRY: "3"

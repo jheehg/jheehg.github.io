@@ -1,225 +1,28 @@
+---
+layout: null
+---
+
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
- <title>jheehg blog</title>
- <link href="/atom.xml" rel="self"/>
- <link href="/"/>
- <updated>2022-08-18T12:56:08+00:00</updated>
- <id></id>
+ <title>{{ site.title }}</title>
+ <link href="{{ site.url }}{{ site.baseurl }}/atom.xml" rel="self"/>
+ <link href="{{ site.url }}{{ site.baseurl }}/"/>
+ <updated>{{ site.time | date_to_xmlschema }}</updated>
+ <id>{{ site.url }}</id>
  <author>
-   <name></name>
-   <email></email>
+   <name>{{ site.author.name }}</name>
+   <email>{{ site.author.email }}</email>
  </author>
 
- 
+ {% for post in site.posts %}
  <entry>
-   <title>github actions으로 jekyll 수동 배포</title>
-   <link href="/2022/08/15/deploy-with-github-actions"/>
-   <updated>2022-08-15T00:00:00+00:00</updated>
-   <id>/2022/08/15/deploy-with-github-actions</id>
-   <content type="html">&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;github-actions로-배포하게-된-이유&quot;&gt;github actions로 배포하게 된 이유&lt;/h3&gt;
-&lt;hr /&gt;
-&lt;p&gt;jekyll 에서는 카테고리나 태그 같은 기능을 사용자가 직접 플러그인을 생성해서 사용할 수 있게 하는데 &lt;br /&gt;
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;github-pages&lt;/code&gt; 로 자동 배포하게 될 경우 커스텀 플러그인을 사용할 수 없게 된다.&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;아래 jekyll 공식 docs에서 github actions과 plugin에 관련된 설명이다.&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;When building a Jekyll site with GitHub Pages, the standard flow is restricted for security
-reasons and to make it simpler to get a site setup. For more control over the build and 
-still host the site with GitHub Pages you can use GitHub Actions.
-
-Plugins — You can use any Jekyll plugins irrespective of them being on the supported
-versions list, even *.rb files placed in the _plugins directory of your site.
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;&lt;br /&gt;
-이로 인해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;category&lt;/code&gt; 플러그인 생성 후 실제 배포를 하면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/tag/*&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/category/*&lt;/code&gt; 가
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;404 not found&lt;/code&gt; 페이지로 이동했다. &lt;br /&gt;
-(아래와 같이 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_plugins&lt;/code&gt;  에서 tags는 가져왔던 테마에 원래 있었고 category는 새로 생성한 상태였다.)&lt;/p&gt;
-
-&lt;p&gt;&lt;img width=&quot;300&quot; alt=&quot;jekyll_plugins&quot; src=&quot;https://user-images.githubusercontent.com/56527636/184523048-6270d2f0-7fa6-4a9d-b4ca-1ea062f06c8f.png&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;구글링을 통해 현재 상태에서 해결할 수 있는 방법을 찾았으나 실패했다.&lt;/p&gt;
-&lt;s&gt;master 브랜치에 .nojekyll 파일을 _site 폴더와 같이 커밋해서 배포하는 방법..?&lt;/s&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;github-actions에서-새-workflow-생성&quot;&gt;github actions에서 새 workflow 생성&lt;/h3&gt;
-&lt;hr /&gt;
-&lt;p&gt;workflow 파일의 경우 github actions 에서 제공하는 것도 있고 marketplace에서 찾을 수도 있는데&lt;br /&gt;
-나는 아래 github에 예시와 jekyll을 수동 배포한 다른 블로그 글들을 보고 참고해서 작성했다.&lt;br /&gt;
-&lt;a href=&quot;https://github.com/helaili/jekyll-action&quot;&gt;https://github.com/helaili/jekyll-action&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;workflow-배포하면서-실패했던-원인들을-정리해보기&quot;&gt;workflow 배포하면서 실패했던 원인들을 정리해보기&lt;/h3&gt;
-
-&lt;div class=&quot;language-yml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Build and deploy Jekyll site to GitHub Pages&lt;/span&gt;
-
-&lt;span class=&quot;na&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;push&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;branches&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;master&lt;/span&gt;
-
-&lt;span class=&quot;na&quot;&gt;jobs&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;github-pages&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;runs-on&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ubuntu-latest&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;steps&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;uses&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;actions/checkout@v2&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;uses&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;actions/cache@v2&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;with&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-          &lt;span class=&quot;na&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;vendor/bundle&lt;/span&gt;
-          &lt;span class=&quot;na&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;${{ runner.os }}-gems-${{ hashFiles(&apos;**/Gemfile&apos;) }}&lt;/span&gt;
-          &lt;span class=&quot;na&quot;&gt;restore-keys&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;|&lt;/span&gt;
-            &lt;span class=&quot;s&quot;&gt;${{ runner.os }}-gems-&lt;/span&gt;
-      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;uses&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;helaili/jekyll-action@2.0.5&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;# Choose any one of the Jekyll Actions&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;with&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
-          &lt;span class=&quot;na&quot;&gt;target_branch&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;gh-pages&apos;&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;                                &lt;span class=&quot;c1&quot;&gt;# Some relative inputs of your action&lt;/span&gt;
-          &lt;span class=&quot;na&quot;&gt;JEKYLL_PAT&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;${{ secrets.JEKYLL_PAT }}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;-target_branch-를-gh_pages-로-지정해주어야-_site-디렉토리-안에-정적파일들이-해당-브런치에-생성된다&quot;&gt;🔗 target_branch 를 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gh_pages&lt;/code&gt; 로 지정해주어야 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_site&lt;/code&gt; 디렉토리 안에 정적파일들이 해당 브런치에 생성된다.&lt;/h4&gt;
-
-&lt;h4 id=&quot;-workflow에-secrtes-지정할-때-key-value값-주의하기&quot;&gt;🔗 workflow에 secrtes 지정할 때 key, value값 주의하기&lt;/h4&gt;
-&lt;p&gt;PAT 추가해주는 부분에 key값을 어떻게 입력해야 될지 확실하지 않아서 이 부분에서 여러번 배포를 실패했다. &lt;br /&gt;
-PAT 키 생성과 input입력은 아래 과정과 같이 해결했다. &lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;레파지토리에서 settings 탭으로 이동한다.&lt;br /&gt;&lt;br /&gt;
-&lt;img width=&quot;800&quot; alt=&quot;repo_settings&quot; src=&quot;https://user-images.githubusercontent.com/56527636/184523331-a61d8264-1077-4ebc-8e21-0546c6102fb4.png&quot; /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Security 탭에서 Action 탭으로 이동한다.&lt;br /&gt;&lt;br /&gt;
-&lt;img width=&quot;280&quot; alt=&quot;security_page&quot; src=&quot;https://user-images.githubusercontent.com/56527636/184523358-986607ad-31e0-4a2e-9c9f-62421d5276ab.png&quot; /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Repository secrets에 토큰 값을 추가해준다. &lt;br /&gt;이 토큰 값은 github 개인 설정 페이지에서 Developer settings - Personal access tokens 에서 생성 해준 값을 사용한다.&lt;br /&gt;&lt;br /&gt;
-&lt;img width=&quot;650&quot; alt=&quot;repo_secrets&quot; src=&quot;https://user-images.githubusercontent.com/56527636/184523439-19ee3b91-c157-475b-a4b3-ded07d11d55a.png&quot; /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;workflow file에 Repository secrets input으로 key값과 value값은 각각 &lt;br /&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;JEKYLL_PAT&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${{ secrets.JEKYLL_PAT }}&lt;/code&gt; 으로 넣어준다. secrets 명은 임의로 생성한다.&lt;br /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;아래는 github actions workflow security guide 관련 문서인데 secrets 생성하는 규칙이 나와있다. &lt;br /&gt;
-&lt;a href=&quot;https://docs.github.com/en/actions/security-guides/encrypted-secrets&quot;&gt;https://docs.github.com/en/actions/security-guides/encrypted-secrets&lt;/a&gt; &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;-배포-소스-파일의-브랜치-설정을-gh-pages-로-지정하기&quot;&gt;🔗 배포 소스 파일의 브랜치 설정을 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gh-pages&lt;/code&gt; 로 지정하기&lt;/h4&gt;
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;레파지토리의 settings 탭에서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Pages&lt;/code&gt; 페이지로 이동한다.&lt;br /&gt;&lt;br /&gt;
-&lt;img width=&quot;280&quot; alt=&quot;pages&quot; src=&quot;https://user-images.githubusercontent.com/56527636/184597903-ff99a5f1-3fea-4329-ace1-b87f86fba142.png&quot; /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Build and deployment 에서 branch 지정을 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;master&lt;/code&gt;에서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gh-pages&lt;/code&gt;로 변경해준다.&lt;br /&gt;&lt;br /&gt;
-&lt;img width=&quot;700&quot; alt=&quot;build-branch&quot; src=&quot;https://user-images.githubusercontent.com/56527636/184597964-1aa61cd3-434c-464f-83ed-d247b4e595fa.png&quot; /&gt;&lt;br /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;아래 블로그 글에 해당 내용이 잘 나와 있다.&lt;br /&gt;
-&lt;a href=&quot;https://bitbra.in/2021/10/03/host-your-own-blog-for-free-with-custom-domain.html&quot;&gt;https://bitbra.in/2021/10/03/host-your-own-blog-for-free-with-custom-domain.html&lt;/a&gt;
-&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;추가로-더-알아봐야-할-내용들&quot;&gt;추가로 더 알아봐야 할 내용들&lt;/h3&gt;
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;github-pages&lt;/code&gt;에서 자동배포 되는 action이 수동으로 생성한 action과 중복해서 실행되고 있는데 &lt;br /&gt;
-수동으로 생성한 workflow만 실행되게 할 수 있을지 알아보려고 한다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;github-actions-참고-자료&quot;&gt;github actions 참고 자료&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&quot;https://docs.github.com/en/actions&quot;&gt;https://docs.github.com/en/actions&lt;/a&gt;&lt;br /&gt;
-&lt;a href=&quot;https://jekyllrb.com/docs/continuous-integration/github-actions/#advantages-of-using-actions&quot;&gt;https://jekyllrb.com/docs/continuous-integration/github-actions/#advantages-of-using-actions&lt;/a&gt;&lt;/p&gt;
-</content>
+   <title>{{ post.title | xml_escape }}</title>
+   <link href="{{ site.url }}{{ site.baseurl }}{{ post.url }}"/>
+   <updated>{{ post.date | date_to_xmlschema }}</updated>
+   <id>{{ site.url }}{{ post.id }}</id>
+   <content type="html">{{ post.content | xml_escape }}</content>
  </entry>
- 
- <entry>
-   <title>github blog 생성해보기</title>
-   <link href="/2022/07/31/tutorial-for-gitblog"/>
-   <updated>2022-07-31T00:00:00+00:00</updated>
-   <id>/2022/07/31/tutorial-for-gitblog</id>
-   <content type="html">&lt;h3 id=&quot;github-blog-생성&quot;&gt;github blog 생성&lt;/h3&gt;
-
-&lt;p&gt;개발블로그 시작을 그렇게도 망설이고 미뤘는데 이왕이면 블로그 생성, 운영 하면서 겪는 경험도
-도움이 많이 될 것 같아 얼레벌레 시작하게 된 블로그.&lt;br /&gt;
-욕심 부리지 않고 천천히 배워볼 예정이다. 👏&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;레파지토리 생성&lt;br /&gt;
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;github-pages&lt;/code&gt; 배포를 위해 반드시 아래 규칙을 따라 레파지토리를 생성해야 한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;username.github.io
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;맘에드는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jekyll theme&lt;/code&gt; 을 적용하기&lt;br /&gt;
-무료테마를 고른 후, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git clone&lt;/code&gt; 하여 일단 테마의 모든 내용을 내 깃헙 블로그 레파지토리 디렉토리로 옮기는 것으로 시작한다. 다 옮겼다면 커밋, 푸시를 한다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;1~3분 정도 지나면 커밋된 레파지토리 변경 내용이 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;github-pages&lt;/code&gt; 를 통해 배포가 되어있고, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;username.github.io&lt;/code&gt; 로 들어가서 배포된 사항을 확인할 수 있다.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;로컬에서 블로그를 실행하려면 다음과 같은 과정이 필요하다고 한다.&lt;br /&gt;
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jekyll&lt;/code&gt; 과 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ruby&lt;/code&gt; 설치가 필요한데, mac OS 환경의 설치 방법은 다음 doc을 참고하였다.&lt;br /&gt;
-&lt;a href=&quot;https://jekyllrb-ko.github.io/docs/installation/macos/&quot;&gt;https://jekyllrb-ko.github.io/docs/installation/macos/&lt;/a&gt;&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;로컬설치-참고&quot;&gt;로컬설치 참고&lt;/h3&gt;
-
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rbenv&lt;/code&gt; 를 통해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ruby&lt;/code&gt; 를 설치하면 프로젝트마다 여러 버전을 설치할 수 있다고 하는데&lt;br /&gt;
-성격 급한 나머지 이 내용을 못보고 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ruby&lt;/code&gt;를 설치해버린 나..&lt;br /&gt;
-근데 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ruby&lt;/code&gt; 를 평소에 배워본적도 사용해본적도 없는 상태이므로 일단은 나중에 필요하면 설치하도록 하고 다음단계로 넘어갔다.&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;로컬에서 실행해보려고 했는데 여기서 몇 가지 문제점들이 발생했다.&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;bundler, bundle은 무엇인가? 😂 npm 같은 존재인가..&lt;/li&gt;
-  &lt;li&gt;Gemfile 에 적용된 gem들의 버전이 다 deprecated 된 상태라 도통 실행이 되질 않는다.&lt;/li&gt;
-  &lt;li&gt;2번의 문제를 해결하면 실행은 할 수 있을 것 같은데 오늘 처음 본 bundle, gem…. 하아…^^&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;&lt;br /&gt;
-해결 방법
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bundle update --bundler&lt;/code&gt; 를 통해 bundler 버전을 업데이트 해주었다.&lt;br /&gt;Gemfile에 적용된 버전은 지원하지 않는 버전인데 무슨 버전으로 업데이트 해야할지 몰라서 latest 로 설치했다.&lt;br /&gt;&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bundle outdated&lt;/code&gt; 하면 현재 쓰는 gem 중에서 업데이트 대상에 속하는 gem 들을 알려주는데 뭐가 뭔지도 모르겠고 거의 모든 gem이 outdated 상태여서 모든 gem을 다 업데이트 해주기로 했다.&lt;br /&gt;&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bundle update --all&lt;/code&gt; 로 outdated 된 gem을 모두 업데이트 해준다.&lt;br /&gt;&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;1~3번까지 모두 했는데도 또 오류가 난다. ^^&lt;br /&gt;&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;오류 로그를 보니 webrick 파일을 로드할 수 없다는 내용이었다. 음….&lt;br /&gt;&lt;br /&gt;
-&lt;img width=&quot;720&quot; alt=&quot;webbrick-cannot-load-error&quot; src=&quot;https://user-images.githubusercontent.com/56527636/182014515-7acd4add-9b23-4760-ae63-6a2f49ca22b4.png&quot; /&gt; &lt;br /&gt;&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;구글링을 해보면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;webbrick&lt;/code&gt; 또한 설치를 해주면 된다고 하니, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bundle add webrick&lt;/code&gt; 로 설치를 진행한다.&lt;br /&gt;
-🔗 webrick이란? &lt;a href=&quot;https://github.com/ruby/webrick&quot;&gt;https://github.com/ruby/webrick&lt;/a&gt; &lt;br /&gt;&lt;br /&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bundle exec jekyll serve&lt;/code&gt; 로 서버를 실행한 후 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;localhost:4000&lt;/code&gt; 으로 접속하면 로컬 실행이 마무리 된다.&lt;br /&gt;
-&lt;img width=&quot;720&quot; alt=&quot;jekyll-serve&quot; src=&quot;https://user-images.githubusercontent.com/56527636/182014485-6e044f84-3e46-4832-ace4-7cd1565b8955.png&quot; /&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;이제 하나하나 커스텀하는 과정은 아래 리소스를 참고해서 진행할 예정이다.&lt;br /&gt;
-&lt;a href=&quot;https://jekyllrb-ko.github.io&quot;&gt;https://jekyllrb-ko.github.io&lt;/a&gt; &lt;br /&gt;
-&lt;a href=&quot;https://bundler.io&quot;&gt;https://bundler.io&lt;/a&gt;&lt;/p&gt;
-</content>
- </entry>
- 
- <entry>
-   <title>blog post 테스트 글입니다.</title>
-   <link href="/2022/07/31/test"/>
-   <updated>2022-07-31T00:00:00+00:00</updated>
-   <id>/2022/07/31/test</id>
-   <content type="html">&lt;p&gt;테스트입니다.
-test&lt;/p&gt;
-</content>
- </entry>
- 
+ {% endfor %}
 
 </feed>

@@ -1,0 +1,97 @@
+@import 'variables';
+
+div.highlight {
+  margin-top: 0.3rem;
+  border: 1px solid var(--pre-highlight-color);
+  border-radius: 4px;
+  background-color: var(--pre-bg-color);
+  pre.highlight {
+    background-color: var(--pre-bg-color);
+  }
+}
+.highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight code {
+  background-color: transparent;
+  border: none;
+  border-radius: 0px;
+  color: var(--text-color);
+  font-weight: initial;
+}
+
+.highlight, .highlight .w {
+  color: var(--text-color);
+  background-color: #2b2c27;
+}
+.highlight .err {
+  color: #272822;
+  background-color: #f92672;
+}
+.highlight .c, .highlight .ch, .highlight .cd, .highlight .cm, .highlight .cpf, .highlight .c1, .highlight .cs {
+  color: var(--pre-highlight-color);
+}
+.highlight .cp {
+  color: #f4bf75;
+}
+.highlight .nt {
+  color: #f4bf75;
+}
+.highlight .o, .highlight .ow {
+  color: var(--text-color);
+}
+.highlight .p, .highlight .pi {
+  color: var(--text-color);
+}
+.highlight .gi {
+  color: #a6e22e;
+}
+.highlight .gd {
+  color: #f92672;
+}
+.highlight .gh {
+  color: #66d9ef;
+  background-color: #272822;
+  font-weight: bold;
+}
+.highlight .k, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kv {
+  color: #ae81ff;
+}
+.highlight .kc, .highlight .kt {
+  color: #e57c04;
+}
+.highlight .kd {
+  color: #27a8c2; // #2ac7d9;
+}
+.highlight .s, .highlight .sb, .highlight .sc, .highlight .dl, .highlight .sd, .highlight .s2, .highlight .sh, .highlight .sx, .highlight .s1 {
+  color: #70a801; // #a6e22e;
+}
+.highlight .sa {
+  color: #ae81ff;
+}
+.highlight .sr {
+  color: #81c4bc;
+}
+.highlight .si {
+  color: #cc6633;
+}
+.highlight .se {
+  color: #cc6633;
+}
+.highlight .nn {
+  color: #f4bf75;
+}
+.highlight .nc {
+  color: #f4bf75;
+}
+.highlight .no {
+  color: #f4bf75;
+}
+.highlight .na {
+  color: #27a8c2; //#66d9ef;
+}
+.highlight .m, .highlight .mb, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mx {
+  color: #70a801; //#a6e22e;
+}
+.highlight .ss {
+  color: #70a801; //#a6e22e;
+}
