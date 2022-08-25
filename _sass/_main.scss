@@ -154,6 +154,13 @@ h5 {
   font-weight: 600;
 }
 
+u {
+  text-decoration:underline;
+  text-decoration-color: #50c986;
+  text-decoration-thickness: 2px;
+  font-weight: 600;
+}
+
 section.post h4, h5 {
   margin: 0.6rem 0 !important;
 }
@@ -296,4 +303,15 @@ figcaption {
   text-decoration: none;
 }
 
-
+/** pagination **/
+ul.pager { 
+  text-align: center; 
+  list-style: none; 
+}
+ul.pager li {
+  display: inline;
+  border: 1px solid black; 
+  padding: 10px; 
+  font-size: 0.9rem;
+  margin: 5px;
+}
