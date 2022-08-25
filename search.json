@@ -2,6 +2,17 @@
   
     {
 
+      "title"    : "Typescript Exercise 10 풀어보고 정리해보기",
+      "description" : "Typescript Exercise 10 풀어보기",
+      "url"      : "/2022/08/25/ts-exercise-10",
+      "category" : "FE",
+      "tags"     : "typescript",
+      "date"     : "2022-08-25 00:00:00 +0000"
+
+    } ,
+  
+    {
+
       "title"    : "github actions으로 jekyll 수동 배포",
       "description" : "github actions으로 jekyll 수동 배포를 위한 글입니다.",
       "url"      : "/2022/08/15/deploy-with-github-actions",
