@@ -84,6 +84,15 @@ hr {
   border: 0;
 }
 
+table {
+  border-collapse: collapse;
+  thead > tr > th, tbody > tr > td {
+    border: 1px solid #b2b1b1;
+    text-align: center;
+    padding: 0.5rem;
+  }
+}
+
 div.scrollUpIconDiv {
   background: transparent;
   position: fixed;
