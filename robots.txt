@@ -1,2 +1,3 @@
 User-agent: *
-Sitemap: /sitemap.xml
+Allow: /
+Sitemap: https://jheehg.github.io/sitemap.xml

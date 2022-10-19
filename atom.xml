@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
  <title>jheehg blog</title>
- <link href="/atom.xml" rel="self"/>
- <link href="/"/>
- <updated>2022-10-19T13:04:47+00:00</updated>
- <id></id>
+ <link href="https://jheehg.github.io/atom.xml" rel="self"/>
+ <link href="https://jheehg.github.io/"/>
+ <updated>2022-10-19T13:32:46+00:00</updated>
+ <id>https://jheehg.github.io</id>
  <author>
    <name></name>
    <email></email>
@@ -14,9 +14,9 @@
  
  <entry>
    <title>Lottie Animation 리액트 프로젝트에 적용하기</title>
-   <link href="/2022/08/31/lottie-animation"/>
+   <link href="https://jheehg.github.io/2022/08/31/lottie-animation"/>
    <updated>2022-08-31T00:00:00+00:00</updated>
-   <id>/2022/08/31/lottie-animation</id>
+   <id>https://jheehg.github.io/2022/08/31/lottie-animation</id>
    <content type="html">&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;리액트에서 사용 가능한 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lottie&lt;/code&gt; 모듈 중 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lottie-react&lt;/code&gt; 를 사용하였다. &lt;br /&gt;
@@ -153,9 +153,9 @@
  
  <entry>
    <title>Typescript Exercise 10 풀어보고 정리해보기</title>
-   <link href="/2022/08/25/ts-exercise-10"/>
+   <link href="https://jheehg.github.io/2022/08/25/ts-exercise-10"/>
    <updated>2022-08-25T00:00:00+00:00</updated>
-   <id>/2022/08/25/TS-exercise-10</id>
+   <id>https://jheehg.github.io/2022/08/25/TS-exercise-10</id>
    <content type="html">&lt;p&gt;&lt;br /&gt;
 타입스크립트 학습을 위해 TypeScript exercises 문제를 풀어보고
 기억 보관 목적으로 정리해보는 글입니다. 😀 &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
@@ -367,9 +367,9 @@ type PromiseResult&amp;lt;T&amp;gt; = {[K in keyof T]: ReturnPromise&amp;lt;T[K]
  
  <entry>
    <title>github actions으로 jekyll 수동 배포</title>
-   <link href="/2022/08/15/deploy-with-github-actions"/>
+   <link href="https://jheehg.github.io/2022/08/15/deploy-with-github-actions"/>
    <updated>2022-08-15T00:00:00+00:00</updated>
-   <id>/2022/08/15/deploy-with-github-actions</id>
+   <id>https://jheehg.github.io/2022/08/15/deploy-with-github-actions</id>
    <content type="html">&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;github-actions로-배포하게-된-이유&quot;&gt;github actions로 배포하게 된 이유&lt;/h3&gt;
@@ -491,9 +491,9 @@ PAT 키 생성과 input입력은 아래 과정과 같이 해결했다. &lt;br /&
  
  <entry>
    <title>github blog 생성해보기</title>
-   <link href="/2022/07/31/tutorial-for-gitblog"/>
+   <link href="https://jheehg.github.io/2022/07/31/tutorial-for-gitblog"/>
    <updated>2022-07-31T00:00:00+00:00</updated>
-   <id>/2022/07/31/tutorial-for-gitblog</id>
+   <id>https://jheehg.github.io/2022/07/31/tutorial-for-gitblog</id>
    <content type="html">&lt;h3 id=&quot;github-blog-생성&quot;&gt;github blog 생성&lt;/h3&gt;
 
 &lt;p&gt;개발블로그 시작을 그렇게도 망설이고 미뤘는데 이왕이면 블로그 생성, 운영 하면서 겪는 경험도
@@ -566,9 +566,9 @@ PAT 키 생성과 input입력은 아래 과정과 같이 해결했다. &lt;br /&
  
  <entry>
    <title>blog post 테스트 글입니다.</title>
-   <link href="/2022/07/31/test"/>
+   <link href="https://jheehg.github.io/2022/07/31/test"/>
    <updated>2022-07-31T00:00:00+00:00</updated>
-   <id>/2022/07/31/test</id>
+   <id>https://jheehg.github.io/2022/07/31/test</id>
    <content type="html">&lt;p&gt;테스트입니다.
 test2&lt;/p&gt;
 </content>
