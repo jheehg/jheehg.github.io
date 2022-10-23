@@ -314,13 +314,25 @@ figcaption {
 
 /** pagination **/
 ul.pager { 
-  text-align: center; 
+  width: 60%;
   list-style: none; 
-}
-ul.pager li {
-  display: inline;
-  border: 1px solid black; 
-  padding: 10px; 
-  font-size: 0.9rem;
-  margin: 5px;
+  display: grid;
+  grid-template-columns: 33.3% 33.3% 33.3%;
+  margin: 0 auto;
+  li {
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+    padding: 10px 20px; 
+    font-size: 0.9rem;
+  }
+  li.page_title {
+    font-weight: 500;
+  }
+  li.previous, li.next {
+    border: 1px solid black; 
+  }
+  li.previous_none, li.next_none {
+    visibility: hidden;
+  }
 }
