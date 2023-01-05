@@ -2,6 +2,17 @@
   
     {
 
+      "title"    : "getter property가 있는 객체 복사하기",
+      "description" : "getter property가 있는 객체 복사하기 관련 글입니다.",
+      "url"      : "/2023/01/03/getter-property",
+      "category" : "",
+      "tags"     : "javascript",
+      "date"     : "2023-01-03 00:00:00 +0000"
+
+    } ,
+  
+    {
+
       "title"    : "Lottie Animation 리액트 프로젝트에 적용하기",
       "description" : "리액트 Lottie Animation으로 toggle 버튼을 구현해봅니다.",
       "url"      : "/2022/08/31/lottie-animation",

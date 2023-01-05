@@ -2,11 +2,11 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://jheehg.github.io/about</loc>
-<lastmod>2022-10-23T12:28:46+00:00</lastmod>
+<lastmod>2023-01-05T14:22:05+00:00</lastmod>
 </url>
 <url>
 <loc>https://jheehg.github.io/search</loc>
-<lastmod>2022-10-23T12:28:46+00:00</lastmod>
+<lastmod>2023-01-05T14:22:05+00:00</lastmod>
 </url>
 <url>
 <loc>https://jheehg.github.io/2022/07/31/test</loc>
@@ -27,6 +27,10 @@
 <url>
 <loc>https://jheehg.github.io/2022/08/31/lottie-animation</loc>
 <lastmod>2022-08-31T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>https://jheehg.github.io/2023/01/03/getter-property</loc>
+<lastmod>2023-01-03T00:00:00+00:00</lastmod>
 </url>
 <url>
 <loc>https://jheehg.github.io/category/gitblog/</loc>
@@ -65,7 +69,10 @@
 <loc>https://jheehg.github.io/tag/animation/</loc>
 </url>
 <url>
+<loc>https://jheehg.github.io/tag/javascript/</loc>
+</url>
+<url>
 <loc>https://jheehg.github.io/google883e7a6282499f04.html</loc>
-<lastmod>2022-10-23T12:28:39+00:00</lastmod>
+<lastmod>2023-01-05T14:20:15+00:00</lastmod>
 </url>
 </urlset>
