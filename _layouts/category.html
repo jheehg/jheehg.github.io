@@ -2,18 +2,18 @@
 layout: default
 ---
 
-<section class="posts">
+<section class="category-list">
   <h1>#{{page.category}}</h1>
   <ul>
-    {% for post in site.posts %} 
-      {% if post.categories contains page.category %}
-    <li>
-      <a class="post" href="{{ post.url }}">{{ post.title }}</a
-      ><time datetime="{{ post.date | date_to_xmlschema }}"
+    {% for post in site.posts %} {% if post.categories contains page.category %}
+    <li class="category-item">
+      <a class="category-title" href="{{ post.url }}">{{ post.title }}</a
+      ><time
+        class="category-time"
+        datetime="{{ post.date | date_to_xmlschema }}"
         >{{ post.date | date: "%m-%d-%Y" }}</time
       >
     </li>
-      {% endif %} 
-    {% endfor %}
+    {% endif %} {% endfor %}
   </ul>
 </section>

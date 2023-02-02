@@ -86,7 +86,8 @@ hr {
 
 table {
   border-collapse: collapse;
-  thead > tr > th, tbody > tr > td {
+  thead > tr > th,
+  tbody > tr > td {
     border: 1px solid #b2b1b1;
     text-align: center;
     padding: 0.5rem;
@@ -164,13 +165,14 @@ h5 {
 }
 
 u {
-  text-decoration:underline;
+  text-decoration: underline;
   text-decoration-color: #50c986;
   text-decoration-thickness: 2px;
   font-weight: 600;
 }
 
-section.post h4, h5 {
+section.post h4,
+h5 {
   margin: 0.6rem 0 !important;
 }
 
@@ -197,35 +199,49 @@ b {
 }
 
 .posts ul,
-header ul {
+header ul,
+.category-list ul {
   list-style: none;
 }
 
-.posts li {
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 0.5rem;
+.posts li.post-item,
+.category-list li.category-item {
+  margin-bottom: 2.7rem;
 }
 
 .posts li a,
-.posts li div,
-.projects li a {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.category-list li a {
   text-decoration: none;
 }
 
-.posts li time,
-.projects li time {
-  padding-left: 1rem;
+.posts li p.post-title,
+.category-list li p.category-title {
   white-space: nowrap;
-  font-variant-numeric: tabular-nums;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  transition: color 0.3s;
+
+  &:hover {
+    text-decoration: underline;
+    color: var(--title-hover-color);
+  }
+}
+
+.posts li .post-time,
+.category-list li .category-time {
+  & time {
+    font-style: italic;
+    white-space: nowrap;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--time-color);
+  }
 }
 
 .post ul,
-.project ul,
 .post ol {
   list-style-position: inside;
 }
@@ -285,7 +301,8 @@ section.post {
   .photos ul {
     margin-top: 0.5rem;
   }
-  div.scrollUpIconDiv, div.themeIconDiv {
+  div.scrollUpIconDiv,
+  div.themeIconDiv {
     right: 20px;
   }
 }
@@ -313,26 +330,39 @@ figcaption {
 }
 
 /** pagination **/
-ul.pager { 
-  width: 60%;
-  list-style: none; 
+ul.pager {
+  width: 100%;
+  list-style: none;
   display: grid;
   grid-template-columns: 33.3% 33.3% 33.3%;
   margin: 0 auto;
   li {
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
     text-align: center;
-    padding: 10px 20px; 
-    font-size: 0.9rem;
+    padding: 10px 20px;
+    font-size: 1rem;
+    a {
+      width: 100%;
+      display: block;
+      padding: 0 30px;
+      transition: color 0.3s;
+      &:hover {
+        color: #8a8888;
+      }
+    }
   }
   li.page_title {
     font-weight: 500;
   }
-  li.previous, li.next {
-    border: 1px solid black; 
+  li.previous {
+    text-align: left;
   }
-  li.previous_none, li.next_none {
+  li.next {
+    text-align: right;
+  }
+  li.previous_none,
+  li.next_none {
     visibility: hidden;
   }
 }

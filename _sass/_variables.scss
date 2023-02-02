@@ -9,6 +9,8 @@
   --code-text-color: rgb(214, 92, 4);
   --pre-bg-color: #f8f8f9;
   --pre-highlight-color: #6e6d6d;
+  --time-color: #999999;
+  --title-hover-color: #469d74;
 }
 
 :root.dark {
@@ -20,4 +22,6 @@
   --code-text-color: #2d91c8;
   --pre-bg-color: #2f3032;
   --pre-highlight-color: #9e9c9c;
+  --time-color: #9e9c9c;
+  --title-hover-color: #a2bf63;
 }

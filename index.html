@@ -14,38 +14,53 @@ pagination:
 <section class="posts">
   <ul>
     {% for post in paginator.posts %}
-    <li>
-      <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a
-      ><time datetime="{{ post.date | date_to_xmlschema }}"
-        >{{ post.date | date: "%m-%d-%Y" }}</time
-      >
+    <li class="post-item">
+      <a href="{{ site.baseurl }}{{ post.url }}">
+        <div class="post-time">
+          <time datetime="{{ post.date | date_to_xmlschema }}"
+            >{{ post.date | date: "%b-%d-%Y" }}</time
+          >
+        </div>
+        <p class="post-title">{{ post.title }}</p>
+        <p>
+          {% if post.excerpt_separator %} {{ post.excerpt | strip_html }} {%
+          else %} {{ post.content | strip_html | truncatewords: 30 }} {% endif
+          %}
+        </p>
+      </a>
     </li>
     {% endfor %}
   </ul>
 </section>
 <section class="pagination">
-   <!-- 
+  <!-- 
     Showing buttons to move to the next and to the previous list of posts (pager buttons).
   -->
   {% if paginator.total_pages > 1 %}
   <ul class="pager">
-      {% if paginator.previous_page %}
-      <li class="previous">
-          <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">Prev</a>
-      </li>
-      {% else %}
-      <li class="previous_none"></li>
-      {% endif %}
-      <li class="page_title">
-        {{ paginator.page }} / {{ paginator.total_pages }}
-      </li>
-      {% if paginator.next_page %}
-      <li class="next">
-          <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">Next</a>
-      </li>
-      {% else %}
-      <li class="next_none"></li>
-      {% endif %}
+    {% if paginator.previous_page %}
+    <li class="previous">
+      <a
+        href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}"
+        >Prev</a
+      >
+    </li>
+    {% else %}
+    <li class="previous_none"></li>
+    {% endif %}
+    <li class="page_title">
+      {{ paginator.page }} / {{ paginator.total_pages }}
+    </li>
+    {% if paginator.next_page %}
+    <li class="next">
+      <a
+        href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}"
+        >Next</a
+      >
+    </li>
+    {% else %}
+    <li class="next_none"></li>
+    {% endif %}
   </ul>
   {% endif %}
 
