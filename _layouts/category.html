@@ -7,12 +7,19 @@ layout: default
   <ul>
     {% for post in site.posts %} {% if post.categories contains page.category %}
     <li class="category-item">
-      <a class="category-title" href="{{ post.url }}">{{ post.title }}</a
-      ><time
-        class="category-time"
-        datetime="{{ post.date | date_to_xmlschema }}"
-        >{{ post.date | date: "%m-%d-%Y" }}</time
-      >
+      <a href="{{ post.url }}">
+        <div class="category-time">
+          <time datetime="{{ post.date | date_to_xmlschema }}"
+            >{{ post.date | date: "%b-%d-%Y" }}</time
+          >
+        </div>
+        <p class="category-title">{{ post.title }}</p>
+        <p>
+          {% if post.excerpt_separator %} {{ post.excerpt | strip_html }} {%
+          else %} {{ post.content | strip_html | truncatewords: 30 }} {% endif
+          %}
+        </p>
+      </a>
     </li>
     {% endif %} {% endfor %}
   </ul>
