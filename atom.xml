@@ -4,13 +4,132 @@
  <title>jheehg blog</title>
  <link href="https://jheehg.github.io/atom.xml" rel="self"/>
  <link href="https://jheehg.github.io/"/>
- <updated>2023-02-02T14:36:37+00:00</updated>
+ <updated>2023-02-11T10:38:23+00:00</updated>
  <id>https://jheehg.github.io</id>
  <author>
    <name></name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>react-query, react-table 와 상태관리</title>
+   <link href="https://jheehg.github.io/2023/02/11/react-table-react-query"/>
+   <updated>2023-02-11T00:00:00+00:00</updated>
+   <id>https://jheehg.github.io/2023/02/11/react-table_react-query</id>
+   <content type="html">&lt;p&gt;이번 새로운 프로젝트를 진행하면서 &lt;strong&gt;react-query&lt;/strong&gt; 를 처음 사용하고 있는 중인데 &lt;br /&gt;
+역시 라이브러리가 가진 개념과 방향을 이해하는 게 너무 중요하다는 것을 깨닫는 중이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;react-query&lt;/strong&gt; 를 사용해서 데이터를 &lt;strong&gt;fetch&lt;/strong&gt; 할 때는 되도록 &lt;strong&gt;state&lt;/strong&gt; 에 저장해서 관리하지 않아야 할 것 같다.&lt;br /&gt;
+생각해보면 그럴 필요도 없고 &lt;strong&gt;state&lt;/strong&gt; 값이 업데이트 되면서 원치 않는 이펙트가 발생되기도 한다.&lt;br /&gt;
+(애초에 &lt;strong&gt;react-query&lt;/strong&gt; 를 쓰면서 왜 &lt;strong&gt;state&lt;/strong&gt; 으로 관리 할 생각을 했는지.. 나자신이여..😂)&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;현재 공통적으로 문제가 되는 부분은 &lt;strong&gt;state&lt;/strong&gt; 이 업데이트 되면서 그 사이에 기존 값이 보였다가 그 후에 변경이 문제이다.&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;select 컴포넌트에서 옵션으로 사용될 데이터를 &lt;strong&gt;useQuery&lt;/strong&gt; 로 가져오고 그 데이터 값을&lt;br /&gt;
+특정 함수를 통해 가공 후에 옵션 &lt;strong&gt;prop&lt;/strong&gt; 으로 넘겨준다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;여기서 이 옵션값을 &lt;strong&gt;state&lt;/strong&gt; 로 저장할 필요가 없다. 이 불필요한 &lt;strong&gt;state&lt;/strong&gt; 때문에 select 컴포넌트가 값이 변경 &lt;br /&gt;
+될 때마다 깜빡이면서 잠시 사이에 기존 값을 보여주고 난 후에 변경되게 된다. (으으 😵)
+&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-tsx highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;SomeSelect&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;queryKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;apiFn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;renderFunction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;someProps&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;setOptions&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;useState&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;someInterface&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([]);&lt;/span&gt;
+
+  &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;isSuccess&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;customHookForUseQuery&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;queryKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;queryFn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;apiFn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+
+  &lt;span class=&quot;c1&quot;&gt;// 문제되는 부분&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;useEffect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;isSuccess&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;option&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;renderFunction&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;?.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;renderFunction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;?.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;defaultFunction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+      &lt;span class=&quot;nx&quot;&gt;setOptions&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;option&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;isSuccess&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;queryKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Select&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;ref&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ref&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;somePropsForSelect&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;
+아래 방법으로 수정하니 해결되었다. &lt;strong&gt;useMemo&lt;/strong&gt; 를 써도 호출하는 횟수에 개선은 없어서 사용하지는 않았다.&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-tsx highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;SomeSelect&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;queryKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;apiFn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;renderFunction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;someProps&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+
+  &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;isSuccess&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;customHookForUseQuery&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;queryKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;queryFn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;apiFn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+
+  &lt;span class=&quot;c1&quot;&gt;// 변경한 부분&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;options&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;renderFunction&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;?.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;renderFunction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;?.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;defaultFunction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Select&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;ref&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;ref&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;somePropsForSelect&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;/&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;또-다른-문제는&quot;&gt;또 다른 문제는..?&lt;/h4&gt;
+
+&lt;p&gt;테이블 각 &lt;strong&gt;row&lt;/strong&gt; 의 &lt;strong&gt;cell&lt;/strong&gt; 에서 &lt;strong&gt;input&lt;/strong&gt; 으로 값을 수정해야 하는 화면이 있는데&lt;br /&gt;
+기존 프로젝트에서는 &lt;strong&gt;react-hook-form&lt;/strong&gt; 이라는 폼 라이브러리를 사용했어서 이러한 문제가 없었는데&lt;br /&gt;
+라이브러리 없이 사용하니 생각지도 못한 문제점에 부딪혔다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;react-table&lt;/strong&gt; 에서는 &lt;strong&gt;editable data&lt;/strong&gt; 를 처리할때 다음과 같은 솔루션을 제안한다. &lt;br /&gt;
+(왜냐면 &lt;strong&gt;onChange&lt;/strong&gt; 이벤트만을 사용 시 포커스가 &lt;strong&gt;input&lt;/strong&gt; 밖으로 빠지는 버그가 있다)&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;onChange&lt;/strong&gt; 이벤트에서는 &lt;strong&gt;cell&lt;/strong&gt; 내부에서 &lt;strong&gt;local state&lt;/strong&gt; 으로 &lt;strong&gt;value&lt;/strong&gt; 를 관리해서 즉시 업데이트 한다.&lt;/li&gt;
+  &lt;li&gt;이후 &lt;strong&gt;onBlur&lt;/strong&gt; 이벤트에서는 업데이트된 값을 최종적으로 테이블 밖에 선언된 &lt;strong&gt;로컬 state&lt;/strong&gt; 에 업데이트 한다.&lt;br /&gt;&lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;onBlur&lt;/strong&gt; 로 로컬 state 값을 수정하고 난 뒤 다시 변경된 데이터가 react-table 컴포넌트에 전달되게 된다.&lt;br /&gt;
+그럼 테이블 훅에서는 다시 이 데이터를 받아 새로운 row 데이터를 리턴하고 각 table row 에 렌더링하는 일을 할 것이다.&lt;br /&gt;
+이 과정에는 문제가 없다. 문제는 이렇게 상태값이 변경될 때마다 순간적으로 기존 값을 보여주다가 업데이트가 된다는 것이다. &lt;br /&gt;
+신기한건 &lt;strong&gt;react-table&lt;/strong&gt; 에서 보여주는 예시 프로젝트에는 이런 현상이 없는데 뭘까.
+&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;그래서-생각해-본-해결방안은&quot;&gt;그래서 생각해 본 해결방안은&lt;/h4&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;일부 문제되는 페이지에 대한 &lt;strong&gt;react-table&lt;/strong&gt; 사용을 포기하기 -&amp;gt; &lt;em&gt;아주 쉬운 방법이긴 하지만..&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;react-hook-form&lt;/strong&gt; 라이브러리를 적용하기 -&amp;gt; &lt;em&gt;폼이 들어가는 페이지 모두 수정해야 하는 문제가 있다&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;state 으로 관리하지 않고 폼 submit 할때 &lt;strong&gt;FormData&lt;/strong&gt; 객체로 값을 생성시켜 서버에 sending 하기 -&amp;gt; &lt;em&gt;state 구조가 복잡하므로 FormData 로 생성시키는 작업이 딱히 적절하지 않아보인다.&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;what else..? &lt;br /&gt;&lt;br /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;항상 드는 생각이지만 리액트 동작에 대한 컨트롤은 여전히 어렵다는 것이다.&lt;br /&gt;
+아직 해결중이므로 나중에 어떻게 해결했는지 더 이어서 작성해야겠다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://react-table-v7.tanstack.com/docs/examples/editable-data&quot;&gt;https://react-table-v7.tanstack.com/docs/examples/editable-data&lt;/a&gt;&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>getter property가 있는 객체 복사하기</title>
