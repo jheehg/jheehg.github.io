@@ -2,6 +2,17 @@
   
     {
 
+      "title"    : "react-query 중요한 기본 개념들 정리",
+      "description" : "react-query 기본 개념들에 대한 글입니다.",
+      "url"      : "/2023/02/12/react-query-important-defaults",
+      "category" : "FE",
+      "tags"     : "react-query, react",
+      "date"     : "2023-02-12 00:00:00 +0000"
+
+    } ,
+  
+    {
+
       "title"    : "react-query, react-table 와 상태관리",
       "description" : "react-query, react-table 를 사용하면서 겪은 문제점에 대한 글입니다. (해결중)",
       "url"      : "/2023/02/11/react-table-react-query",

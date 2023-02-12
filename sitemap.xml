@@ -2,11 +2,11 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://jheehg.github.io/about</loc>
-<lastmod>2023-02-11T10:38:23+00:00</lastmod>
+<lastmod>2023-02-12T09:24:34+00:00</lastmod>
 </url>
 <url>
 <loc>https://jheehg.github.io/search</loc>
-<lastmod>2023-02-11T10:38:23+00:00</lastmod>
+<lastmod>2023-02-12T09:24:34+00:00</lastmod>
 </url>
 <url>
 <loc>https://jheehg.github.io/2022/07/31/test</loc>
@@ -35,6 +35,10 @@
 <url>
 <loc>https://jheehg.github.io/2023/02/11/react-table-react-query</loc>
 <lastmod>2023-02-11T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>https://jheehg.github.io/2023/02/12/react-query-important-defaults</loc>
+<lastmod>2023-02-12T00:00:00+00:00</lastmod>
 </url>
 <url>
 <loc>https://jheehg.github.io/category/gitblog/</loc>
@@ -83,6 +87,6 @@
 </url>
 <url>
 <loc>https://jheehg.github.io/google883e7a6282499f04.html</loc>
-<lastmod>2023-02-11T10:36:58+00:00</lastmod>
+<lastmod>2023-02-12T09:23:05+00:00</lastmod>
 </url>
 </urlset>
