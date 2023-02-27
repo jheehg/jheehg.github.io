@@ -14,8 +14,8 @@ body {
   font-family: system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  line-height: 1.5;
-  font-size: 1rem;
+  line-height: 1.6;
+  font-size: 1.05rem;
   color: rgb(22, 23, 26);
   background-color: var(--bg-color);
   color: var(--text-color);
@@ -60,10 +60,13 @@ pre {
   margin: 2rem 0;
 }
 
+// ``
 code {
-  padding: 0.2rem 0.3rem;
+  font-size: 1rem;
+  padding: 0.1rem 0.3rem;
   background-color: var(--code-bg-color);
   border-radius: 6px;
+  border: 1px solid var(--code-border-color);
   color: var(--code-text-color);
   font-weight: 500;
 }
@@ -145,13 +148,12 @@ div.themeIconDiv {
 
 blockquote {
   font-style: italic;
-  padding-left: 1rem;
-  border-left: 6px solid var(--blockquote-bar-color);
-  border-right: 1px solid var(--blockquote-bar-color);
-  border-top: 1px solid var(--blockquote-bar-color);
-  border-bottom: 1px solid var(--blockquote-bar-color);
-  margin-left: 0px;
-  padding-left: 17px;
+  border-left: 8px solid var(--blockquote-bar-color);
+  // border-right: 1px solid var(--blockquote-bar-color);
+  // border-top: 1px solid var(--blockquote-bar-color);
+  // border-bottom: 1px solid var(--blockquote-bar-color);
+  background-color: var(--blockquote-bg-color);
+  padding: 17px;
 }
 
 h1,
