@@ -4,13 +4,123 @@
  <title>jheehg blog</title>
  <link href="https://jheehg.github.io/atom.xml" rel="self"/>
  <link href="https://jheehg.github.io/"/>
- <updated>2023-02-12T09:24:34+00:00</updated>
+ <updated>2023-02-27T13:19:40+00:00</updated>
  <id>https://jheehg.github.io</id>
  <author>
    <name></name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>material UI 에 react-hook-form 적용 시 주의할 점</title>
+   <link href="https://jheehg.github.io/2023/02/27/controlled-uncontrolled-component-with-mui-and-react-hook-form"/>
+   <updated>2023-02-27T00:00:00+00:00</updated>
+   <id>https://jheehg.github.io/2023/02/27/Controlled-Uncontrolled-component-with-mui-and-react-hook-form</id>
+   <content type="html">&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;문제-상황&quot;&gt;문제 상황&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;폼 컴포넌트가 사용자의 동작으로 인해 데이터가 변경이 되어야 하는데 값이 바뀌지 않음.&lt;/li&gt;
+  &lt;li&gt;세부 동작
+    &lt;ul&gt;
+      &lt;li&gt;👉 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;react-hook-form&lt;/code&gt; 의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;useForm&lt;/code&gt; 으로 폼 데이터를 관리 (ex. select, radio, input ..)&lt;/li&gt;
+      &lt;li&gt;👉 특정 함수가 실행될 때 마다 사용자에게 입력 받은 데이터를 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;reset&lt;/code&gt; 에 넣고 실행하여 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;react-hook-form&lt;/code&gt; 에서 관리하는 값을 변경해주는데 정작 폼 컴포넌트 자체는 변화가 없음.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;원인&quot;&gt;원인&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mui&lt;/code&gt; 와 같은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;controlled component&lt;/code&gt; 에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;react-hook-form&lt;/code&gt; 를 적용할 때는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Controller&lt;/code&gt; 라는 Wrapper 컴포넌트를 사용해야 함.&lt;/li&gt;
+  &lt;li&gt;아래 설명과 함께 &lt;strong&gt;Controller&lt;/strong&gt;, &lt;strong&gt;Custom Register&lt;/strong&gt; 두가지 방법으로 처리가 가능하다는 예시가 나와있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;h3 id=&quot;controlled-mixed-with-uncontrolled-components&quot;&gt;Controlled mixed with Uncontrolled Components&lt;/h3&gt;
+
+  &lt;p&gt;React Hook Form 은 uncontrolled components 를 수용하지만 controlled components 와도 호환이 가능하다.
+mui, Antd 와 같은 대부분의 UI 라이브러리는 controlled components 를 지원하도록 구축되어 있다.
+그러나 React Hook Form 을 적용하면 controlled components 의 리렌더링도 또한 optimize 가 가능하다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://react-hook-form.com/advanced-usage#ControlledmixedwithUncontrolledComponents&quot;&gt;https://react-hook-form.com/advanced-usage#ControlledmixedwithUncontrolledComponents&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;+ 추가로 참고할 내용&lt;/p&gt;
+
+&lt;p&gt;React Hook Form 는 uncontrolled components 와 native inputs 을 지원하는데
+React-Select, AntD and MUI와 같은 controlled component 에도 적용을 하기 위해서는 Controller 라는 wrapper 를 사용할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;이미 Controller 자체로도 registration 과정을 거치고 있으니 input 에 다시 register 를 사용하지 않아도 된다.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://react-hook-form.com/api/usecontroller/controller/#example&quot;&gt;https://react-hook-form.com/api/usecontroller/controller/#example&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;생각해보면 Controllered Component, Uncontrolled Component 에 대해 정확하게 이해를 못한 상태에서 &lt;br /&gt;
+사용하고 있던 것 같아 개념을 다시 정리해보았다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;controllered-component-vs-uncontrolled-component&quot;&gt;Controllered Component vs UnControlled Component&lt;/h3&gt;
+
+&lt;h4 id=&quot;controllered-component&quot;&gt;Controllered Component&lt;/h4&gt;
+
+&lt;p&gt;폼 컴포넌트 (input, checkbox, or select..) 의 상태에 대한 매니징은 서로 다른 방법으로 할 수 있다.&lt;br /&gt;
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Controllered component&lt;/code&gt; 는 매니징을 리액트 동작에 맡기는 방법이다. &lt;br /&gt;
+사용자가 입력값을 바꾸면 리액트의 로컬상태 값도 같이 바뀌기 때문에 철저하게 로컬상태와 동기화 된다. &lt;br /&gt;
+폼에 값이 입력되면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;onChange&lt;/code&gt; 이벤트 핸들러를 통해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;value&lt;/code&gt; 값을 변경한다. &lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;uncontrolled-component&quot;&gt;UnControlled Component&lt;/h4&gt;
+
+&lt;p&gt;반면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;UnControllered component&lt;/code&gt; 의 경우 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;DOM&lt;/code&gt; 에 의해서 관리되고 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ref&lt;/code&gt; 를 통해서 이 컴포넌트에 접근을 한다. &lt;br /&gt;
+컴포넌트의 값을 바꾸고 싶으면 해당 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;DOM node&lt;/code&gt; 에 직접 접근해서 값을 바꾸게 되는데 이는 관리를 좀 더 까다롭게 만들기도 한다.&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;react-hook-form 에서 제공하는 Controller 컴포넌트를 사용하여 변경하였다.&lt;/p&gt;
+
+&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+   &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;FormControl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;FormLabel&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;“&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;select&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;label&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;”&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;label&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/FormLabel&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;gt;
+&lt;/span&gt;         &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Controller&lt;/span&gt;
+            &lt;span class=&quot;nx&quot;&gt;control&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;control&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+            &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+            &lt;span class=&quot;nx&quot;&gt;render&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{({&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;field&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+               &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+                  &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Select&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{...&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;field&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+                     &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;?.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;option&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+                        &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;MenuItem&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;option&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;option&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+                           &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;option&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+                        &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/MenuItem&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;gt;
+&lt;/span&gt;                     &lt;span class=&quot;p&quot;&gt;))}&lt;/span&gt;
+                  &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/Select&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;gt;
+&lt;/span&gt;               &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;}}&lt;/span&gt;
+         &lt;span class=&quot;sr&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;gt;
+&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/FormControl&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;정리&quot;&gt;정리&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;mui 컴포넌트를 react-hook-form 으로 관리할 경우 controlled component 를 uncontrolled component 방법으로 제어 중인지 확인한다.&lt;/li&gt;
+  &lt;li&gt;controlled component 방법을 적용할 경우 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Controller&lt;/code&gt; 라는 Wrapper component 를 사용한다.&lt;/li&gt;
+  &lt;li&gt;그 외에도 값이 의도한 대로 변경이 되지 않을 경우 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ref&lt;/code&gt; 로 컴포넌트가 관리되는지 확인이 필요하다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>react-query 중요한 기본 개념들 정리</title>
