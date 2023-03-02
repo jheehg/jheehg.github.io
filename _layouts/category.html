@@ -3,7 +3,7 @@ layout: default
 ---
 
 <section class="category-list">
-  <h1>#{{page.category}}</h1>
+  <h2 class="category">#{{page.category}}</h2>
   <ul>
     {% for post in site.posts %} {% if post.categories contains page.category %}
     <li class="category-item">
