@@ -4,7 +4,7 @@
  <title>jheehg blog</title>
  <link href="https://jheehg.github.io/atom.xml" rel="self"/>
  <link href="https://jheehg.github.io/"/>
- <updated>2023-03-02T14:49:54+00:00</updated>
+ <updated>2023-03-05T12:06:55+00:00</updated>
  <id>https://jheehg.github.io</id>
  <author>
    <name></name>
@@ -155,7 +155,18 @@ staleTime 옵션을 길게 적용하면 쿼리를 refetch 가 자주 실행되�
 기본적으로 inactive 된 쿼리들은 5분 이후에 가바지 콜렉터 대상이 되는데 이를 변경하려면
 cacheTIme 옵션을 변경한다. 기본값은 5분으로 설정되어 있음.&lt;/p&gt;
 
-&lt;p&gt;* fetch 된 이후에는 staleTime 영향을 먼저 받고 주어진 stale 타임아웃이 끝날 경우 캐시된 데이터에서 찾게 된다.&lt;/p&gt;
+&lt;strike&gt;\* fetch 된 이후에는 staleTime 영향을 먼저 받고 주어진 stale 타임아웃이 끝날 경우 캐시된 데이터에서 찾게 된다. &lt;/strike&gt;
+&lt;p&gt;&lt;br /&gt;
+✳️ &lt;strong&gt;cache-time 과 stale-time 관계&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;stale-time 이 종료되어 stale 상태가 되면 서버에서 fetch 해서 새 데이터를 가져오기 전까지, 캐시된 데이터를 보여준다. 즉, cache-time 과 상관없이 &lt;strong&gt;stale-time 이 종료되면 다시 fetch 를 한다.&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;cache-time 은 데이터가 stale 상태가 되기 전까지 캐시된 데이터를 가져올 수 있는 duration 을 설정한 것이다.&lt;/li&gt;
+  &lt;li&gt;그래서 &lt;strong&gt;stale-time &amp;lt; cache-time&lt;/strong&gt; 으로 설정하는 것이 좋다.&lt;/li&gt;
+  &lt;li&gt;stale-time 은 요청하는 데이터가 &lt;strong&gt;얼마나 자주 변경되는지&lt;/strong&gt;에 따라 설정한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.codemzy.com/blog/react-query-cachetime-staletime&quot;&gt;https://www.codemzy.com/blog/react-query-cachetime-staletime&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
