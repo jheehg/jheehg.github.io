@@ -34,7 +34,16 @@ Stale query 는 아래 환경에서 다시 refetch 가 일어나는데 각 환�
 기본적으로 inactive 된 쿼리들은 5분 이후에 가바지 콜렉터 대상이 되는데 이를 변경하려면
 cacheTIme 옵션을 변경한다. 기본값은 5분으로 설정되어 있음.
 
-\* fetch 된 이후에는 staleTime 영향을 먼저 받고 주어진 stale 타임아웃이 끝날 경우 캐시된 데이터에서 찾게 된다.
+<strike>\* fetch 된 이후에는 staleTime 영향을 먼저 받고 주어진 stale 타임아웃이 끝날 경우 캐시된 데이터에서 찾게 된다. </strike>
+<br>
+✳️ **cache-time 과 stale-time 관계**
+
+- stale-time 이 종료되어 stale 상태가 되면 서버에서 fetch 해서 새 데이터를 가져오기 전까지, 캐시된 데이터를 보여준다. 즉, cache-time 과 상관없이 **stale-time 이 종료되면 다시 fetch 를 한다.**
+- cache-time 은 데이터가 stale 상태가 되기 전까지 캐시된 데이터를 가져올 수 있는 duration 을 설정한 것이다.
+- 그래서 **stale-time < cache-time** 으로 설정하는 것이 좋다.
+- stale-time 은 요청하는 데이터가 **얼마나 자주 변경되는지**에 따라 설정한다.
+
+<https://www.codemzy.com/blog/react-query-cachetime-staletime>
 
 <br>
 
