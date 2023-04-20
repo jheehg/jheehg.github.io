@@ -204,7 +204,19 @@ export default client;
 If a field accepts arguments, you can specify an array of keyArgs in the field's FieldPolicy. This array indicates which arguments are key arguments that affect the field's return value. **Specifying this array can help reduce the amount of duplicate data in your cache.**
 <br>
 
-👉 Key Argument에 명시된 필드에 대해서는 중복을 제외시키는 것 같다. merge 된 데이터를 조회해야 하므로 limit, page 를 필드로 넣으면 정상적으로 캐시 데이터가 조회 되지 않는다.
+👉 <br>
+Arguments Array 에 값을 넣고 fetch 를 계속 호출하면 해당 Arguments 를 가지고 캐시 ID 로 사용하게 된다. <br>
+Key Argument 를 [page] 로 설정하게 되면 캐시 데이터는 아래처럼 생성되게 된다.<br>
+
+![image](https://user-images.githubusercontent.com/56527636/233343282-a0ac3fde-c505-4758-aaa4-a62b76d8b441.png)
+
+<br>
+fetch 된 데이터를 하나의 데이터로 merge 시키려면 Query 의 images 필드로 생성되는 데이터가 유일해야 하므로 key 값을 설정하지 않아야 한다.
+<br>
+Arguments Array 에 만약 빈 배열을 설정할 경우 아래처럼 빈 객체 `{}` 로 키 값을 넣게 되는데 false 와 동일한 결과를 가져오지만<br>
+애초에 키값 설정의 의도가 없다면 빈 배열 또한 넣어줄 이유가 없으므로 false 로 셋팅해준다.<br>
+
+![image](https://user-images.githubusercontent.com/56527636/233344722-2370fd4f-6621-4cce-8a62-b1af5e118c0e.png)
 
 <br><br>
 
