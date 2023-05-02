@@ -2,6 +2,17 @@
   
     {
 
+      "title"    : "URL 구조 (Query Parameter, Path, etc..)",
+      "description" : "SEO를 고려한 URL 구조 생성 및 적절한 Query Parameter 사용하기",
+      "url"      : "/2023/05/02/url-structure",
+      "category" : "FE",
+      "tags"     : "URL, SEO",
+      "date"     : "2023-05-02 00:00:00 +0000"
+
+    } ,
+  
+    {
+
       "title"    : "간단한 무한 스크롤 만들어보기 with graphQL",
       "description" : "간단한 무한 스크롤 만들어보기 with graphQL",
       "url"      : "/2023/04/18/infinite-scroll-using-graphql",

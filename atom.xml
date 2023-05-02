@@ -4,13 +4,222 @@
  <title>jheehg blog</title>
  <link href="https://jheehg.github.io/atom.xml" rel="self"/>
  <link href="https://jheehg.github.io/"/>
- <updated>2023-04-20T10:58:15+00:00</updated>
+ <updated>2023-05-02T14:28:07+00:00</updated>
  <id>https://jheehg.github.io</id>
  <author>
    <name></name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>URL 구조 (Query Parameter, Path, etc..)</title>
+   <link href="https://jheehg.github.io/2023/05/02/url-structure"/>
+   <updated>2023-05-02T00:00:00+00:00</updated>
+   <id>https://jheehg.github.io/2023/05/02/url-structure</id>
+   <content type="html">&lt;p&gt;&lt;strong&gt;쿼리스트링, 디렉토리?&lt;/strong&gt; &lt;br /&gt;
+URL 을 결정하는 기준을 어떻게 잡아야 할까 궁금해져서 적절한 URL 구조를 생성하는 방법에 대해 찾아보았다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;간단한-url-구조로-생성하기&quot;&gt;간단한 URL 구조로 생성하기&lt;/h2&gt;
+
+&lt;p&gt;✔️ 간단하고 알기 쉬운 단어를 사용&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;https://en.wikipedia.org/wiki/Aviation
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;✔️ UTF-8 인코딩이 필요할 경우 사용 &lt;br /&gt;
+👉 &lt;a href=&quot;https://perishablepress.com/stop-using-unsafe-characters-in-urls/&quot; target=&quot;\_blank&quot;&gt;stop-using-unsafe-characters-in-urls&lt;/a&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;https://www.example.com/%D9%86%D8%B9%D9%86%D8%A7%D8%B9/%D8%A8%D9%82%D8%A7%D9%84%D8%A9
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;✔️ 불필요하게 긴 쿼리 파라미터 피하기&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;https://www.example.com/index.php?id_sezione=360&amp;amp;sid=3a5ebc944f41daa6f849f730f1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;✔️ Underscores(_) 보다 Hyphen(-) 사용하기&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;https://www.example.com/summer_clothing/filter?color_profile=dark_grey
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;query-parameter-사용할-때-아래-사항-주의하기&quot;&gt;Query Parameter 사용할 때 아래 사항 주의하기&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;👉 아래 항목에 포함할 경우 문제가 생길 수도 있음을 인지할 것&lt;/strong&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;동적으로 생성되는 값을 파라미터 값으로 사용 &lt;br /&gt;&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;세션ID 와 같은 파라미터 사용은 동일한 페이지에 대한 중복된 컨텐츠들을 생성하게 된다. &lt;br /&gt;&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;sorting&lt;/strong&gt; 조건을 위해 너무 많은 URL 생성 &lt;br /&gt;&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;내용과 관련이 없는 값을 파라미터로 넣기 ex. referrer ID &lt;br /&gt;
+💡 위와 같은 문제를 해결하기 위해서는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;robots.txt&lt;/code&gt; 을 사용해서 문제가 생길 수 있는 URL에 대한 크롤링 막기
+&lt;a href=&quot;https://seo.tbwakorea.com/blog/robots-txt-complete-guide/&quot; target=&quot;\_blank&quot;&gt;robots.txt 작성 가이드&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;세션ID를 URL 에 저장하지 않고 쿠키와 같은 다른 저장소로 대체하기 &lt;br /&gt;&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;필요없는 파라미터를 제외시켜서 URL 줄이기 &lt;br /&gt;&lt;br /&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nofollow&lt;/code&gt; 같은 attribute 사용으로 동적으로 생성되는 URL 에 대한 크롤링 막기 &lt;a href=&quot;https://developers.google.com/search/docs/crawling-indexing/qualify-outbound-links&quot; target=&quot;\_blank&quot;&gt;https://developers.google.com/search/docs/crawling-indexing/qualify-outbound-links&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;query-parameter-역할&quot;&gt;Query Parameter 역할&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Filtering, Sorting, and Pagination&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/products?category=electronics&amp;amp;sort=price_asc&amp;amp;page=2
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Tracking&lt;/strong&gt;: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;utm&lt;/code&gt; 파라미터를 사용해서 유입 경로에 대해 트래킹을 할 수 있다&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;www.yoursite.com/page?utm_source=newsletter&amp;amp;utm_medium=email&amp;amp;utm_campaign=spring_sale
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Search&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/search?q=query
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Stateful Information&lt;/strong&gt;: 유저가 가지고 있는 상태값을 저장할때 사용. 현재 표시하고 있는 페이지 정보 또한 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Stateful information&lt;/code&gt; 이 될 수 있음&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Debugging&lt;/strong&gt;: 디버깅의 목적으로도 사용이 가능하다&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;# 새로운 sorting 방법을 테스팅할 경우
+
+www.yoursite.com/products?debug=enableNewSort
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;query-parameter-vs-path&quot;&gt;Query Parameter vs Path&lt;/h2&gt;
+
+&lt;p&gt;👉 사용되는 키워드가 페이지 전체를 identify 할 경우는 &lt;u&gt;Path&lt;/u&gt; 사용 &lt;br /&gt;
+👉 페이지 안에서 filtering/sorting 의 값으로 사용될 경우에는 &lt;u&gt;Parameter&lt;/u&gt; 사용
+&lt;a href=&quot;https://stackoverflow.com/questions/30967822/when-do-i-use-path-params-vs-query-params-in-a-restful-api&quot; target=&quot;\_blank&quot;&gt;https://stackoverflow.com/questions/30967822/when-do-i-use-path-params-vs-query-params-in-a-restful-api&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;seo-를-고려한-url-구조-생성하기&quot;&gt;SEO 를 고려한 URL 구조 생성하기&lt;/h2&gt;
+
+&lt;h3 id=&quot;search-engine-이-url을-어떻게-사용하는지-이해하기&quot;&gt;search engine 이 URL을 어떻게 사용하는지 이해하기&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;URL의 기본 구조&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;protocol://hostname/path/filename?querystring#fragment
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;https://&lt;/code&gt; 사용을 권장&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;www&lt;/code&gt; 로 시작하는 도메인과 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;non-www&lt;/code&gt; 도메인 버전에 대해서도 서치 콘솔에 추가한다.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;http://&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;https://&lt;/code&gt; 에 대한 버전도 마찬가지로 둘 다 등록해서 관리하는 것을 권장&lt;/li&gt;
+  &lt;li&gt;protocol, hostname 은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;case-insensitive&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;path, filename, querystring 은 서버에서 어떤 페이지를 가져올지를 결정한다.&lt;/li&gt;
+  &lt;li&gt;path, filename, querystring 은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;case-sensitive&lt;/code&gt; 이므로 주의할 것&lt;/li&gt;
+  &lt;li&gt;fragment 활용해 현재 브라우저에서 스크롤바가 어디에 위치하는지를 표시함. fragment 사용 없이 컨텐츠 그 자체는 같은 내용만을 인식하게 된다.&lt;/li&gt;
+  &lt;li&gt;뒤에 붙는 슬래쉬(&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/&lt;/code&gt;) 표시에 대한 주의&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;동일한 내용
+protocol://hostname/
+protocol://hostname
+
+다른 내용
+protocol://hostname/path/
+protocol://hostname/path
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;정보를-제공하는-목적의-간단한-url로-생성하기&quot;&gt;정보를 제공하는 목적의 간단한 URL로 생성하기&lt;/h3&gt;
+
+&lt;p&gt;페이지의 내용과 관련된 URL 로 사용자에게 간단한 정보 제공하기 &lt;br /&gt;
+아래 URL 예시 참고 &lt;br /&gt;
+❌ https://www.brandonsbaseballcards.com/folder1/22447478/x2/14032015.html &lt;br /&gt;
+✅ https://www.brandonsbaseballcards.com/article/ten-rarest-baseball-cards.html &lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;서치결과에-url이-들어감을-주의&quot;&gt;서치결과에 URL이 들어감을 주의&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;URL 에 키워드 사용하기&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;피해야 하는 URL 구조 예시 &lt;br /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;불필요한 파라미터 사용이나 세션ID 의 사용&lt;/li&gt;
+  &lt;li&gt;page1.html 과 같은 파일명 자체를 URL에 사용&lt;/li&gt;
+  &lt;li&gt;너무 긴 키워드 사용 ex. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;baseball-cards-baseball-cards-baseballcards.html&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;깊은 구조의 계층구조를 가진 서브디렉토리 피하기&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;❌ /dir1/dir2/dir3/dir4/dir5/dir6/page&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;불필요한 서브디렉토리와 서브도메인명 확장&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;❌ http://www.subdomain.website.com/subdirectory/subdirectory/subdirectory/page &lt;br /&gt;
+✅ http://www.website.com/subdirectory-page&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;문서에 접근하는 URL을 여러개 쓰지 않기&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;301 redirect&lt;/code&gt; 로 접근해야 하는 URL 로 이동시키기&lt;/li&gt;
+  &lt;li&gt;redirect 를 사용하지 않는다면 &lt;u&gt;rel=“canonical”&lt;/u&gt; link 사용하기&lt;/li&gt;
+  &lt;li&gt;ex. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;domain.com/page.html&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sub.domain.com/page.html&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;동일한 컨텐츠를 불러올때 URL이 각각 다른경우 canonical 사용하기&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;head 태그 안에 link 태그로 생성할 수 있으며 검색 결과에 보여질 URL을 선택적으로 입력할 수 있다.&lt;/li&gt;
+  &lt;li&gt;Canonical URL 에 대해 자세히 알아보기 👉 &lt;a href=&quot;https://www.shopify.com/partners/blog/canonical-urls&quot; target=&quot;\_blank&quot;&gt;https://www.shopify.com/partners/blog/canonical-urls&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;참고자료&lt;/strong&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://developers.google.com/search/docs/fundamentals/seo-starter-guide?hl=en&amp;amp;visit_id=638185970506284552-1698876260&amp;amp;rd=1#hierarchy&quot; target=&quot;\_blank&quot;&gt;https://developers.google.com/search/docs/fundamentals/seo-starter-guide?hl=en&amp;amp;visit_id=638185970506284552-1698876260&amp;amp;rd=1#hierarchy&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://developers.google.com/search/docs/crawling-indexing/url-structure&quot; target=&quot;\_blank&quot;&gt;https://developers.google.com/search/docs/crawling-indexing/url-structure&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://www.searchenginejournal.com/technical-seo/url-parameter-handling/&quot; target=&quot;\_blank&quot;&gt;https://www.searchenginejournal.com/technical-seo/url-parameter-handling/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;
+&lt;strong&gt;그 외에 읽어볼만한 문서들&lt;/strong&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://moz.com/blog/15-seo-best-practices-for-structuring-urls&quot; target=&quot;\_blank&quot;&gt;15 SEO Best Practices for Structuring URLs&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&quot;https://moz.com/blog/15-seo-best-practices-for-structuring-urls&quot; target=&quot;\_blank&quot;&gt;https://moz.com/blog/15-seo-best-practices-for-structuring-urls&lt;/a&gt;&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>간단한 무한 스크롤 만들어보기 with graphQL</title>
